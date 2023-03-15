@@ -30,7 +30,7 @@ This has been extended from [qdm12/latexdevcontainer](https://github.com/qdm12/l
  - Inclusion of [`ltex-ls`](https://github.com/valentjn/ltex-ls) to use with the LanguageTool and [LTeX](https://marketplace.visualstudio.com/items?itemName=valentjn.vscode-ltex) extensions to provide grammar and spell checking in tex documents.
  - Inclusion of [`inskscape`](https://inkscape.org) to allow the inclusion of SVG graphics in tex documents.
  - No explicit reference to texlive **2022** in the Dockerfile.
- - Building [`biber`](https://github.com/plk/biber) from source to get the latest version regardless of version provided by the package manager (`apt`). This has been done since `biblatex` and `biber` are heavily tied to one another and can easily become incompatible.
+ - Building [`biblatex`](https://github.com/plk/biblatex) from source to get a specific version regardless of version provided by the package manager (`tlmgr`). This has been done since `biblatex` and `biber` are heavily tied to one another and can easily become incompatible.
  - No use of `docker-compose` to simplify the devcontainer setup process.
  - My [dotfiles](https://github.com/willfantom/.files) are used as the base of the image. This offers no real difference in most use cases, but it is a change I guess.
 
