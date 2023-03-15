@@ -51,6 +51,8 @@ jobs:
         with:
           context: .
           file: Dockerfile
+          build-args: |
+            TEX_SCHEME=${{ matrix.scheme }}
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.metadata.outputs.tags }}
