@@ -6,7 +6,7 @@ A complete development container for Latex for use with VSCode/GitHub Codespaces
 
 ## Features
 
- - [`texlive`](https://tug.org/texlive/) install (images for basic, small, and full)
+ - [`texlive`](https://tug.org/texlive/) install (images for basic and small)
  - Compile to PDF with [`latexmk`](https://mg.readthedocs.io/latexmk.html)
  - Format with [`latexindent`](https://latexindentpl.readthedocs.io/en/latest/)
  - Lint with [`chktex`](https://www.nongnu.org/chktex/)
@@ -23,6 +23,18 @@ A complete development container for Latex for use with VSCode/GitHub Codespaces
 - [VS code](https://code.visualstudio.com/download) installed
 - [VS code remote containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installed
 
+## Usage
+
+ 1. In the root of your project, create a directory named `.devcontainer`
+ 2. Copy the `devcontainer.json` file from this repository to the newly created directory
+ 3. **optional:** Change to image being used for the devcontainer by updating the `image` field in the JSON file. For example, use the full texlive install scheme: `ghcr.io/willfantom/devcontainer-latex:latest-full`
+ 4. **optional:** Add other packages to be installed by `tlmgr` when the container starts to the `postCreateCommand` field in the JSON file
+ 5. Open the project in the devontainer via the [devcontainer CLI](https://github.com/devcontainers/cli), the commands in VSCode, or in a GitHub Codespace
+
+### Full TexLive Install
+
+For this, you will have to build the container with the build arg `TEX_SCHEME` set to `full`. This may end up being around 6GB once built... Make sure to set the `image` field in the devcontainer JSON file to the tag of your full scheme image.
+
 ---
 
 This has been extended from [qdm12/latexdevcontainer](https://github.com/qdm12/latexdevcontainer) with the following core changes:
@@ -34,13 +46,6 @@ This has been extended from [qdm12/latexdevcontainer](https://github.com/qdm12/l
  - No use of `docker-compose` to simplify the devcontainer setup process.
  - My [dotfiles](https://github.com/willfantom/.files) are used as the base of the image. This offers no real difference in most use cases, but it is a change I guess.
 
---- 
 
-## Usage
 
- 1. In the root of your project, create a directory named `.devcontainer`
- 2. Copy the `devcontainer.json` file from this repository to the newly created directory
- 3. **optional:** Change to image being used for the devcontainer by updating the `image` field in the JSON file. For example, use the full texlive install scheme: `ghcr.io/willfantom/devcontainer-latex:latest-full`
- 4. **optional:** Add other packages to be installed by `tlmgr` when the container starts to the `postCreateCommand` field in the JSON file
- 5. Open the project in the devontainer via the [devcontainer CLI](https://github.com/devcontainers/cli), the commands in VSCode, or in a GitHub Codespace
 
