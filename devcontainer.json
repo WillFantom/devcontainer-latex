@@ -3,7 +3,7 @@
     "image": "ghcr.io/willfantom/devcontainer-latex:latest-small",
     "workspaceMount": "source=${localWorkspaceFolder}/,target=/workspace,type=bind,consistency=cached",
     "workspaceFolder": "/workspace",
-    "postCreateCommand": "tlmgr install appendix biblatex lipsum svg transparent trimspaces && texhash",
+    "postCreateCommand": "tlmgr install appendix lipsum logreq svg transparent trimspaces && texhash",
     "extensions": [
         // General Extensions
         "naumovs.color-highlight",
