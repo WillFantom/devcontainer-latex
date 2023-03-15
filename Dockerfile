@@ -1,8 +1,8 @@
 FROM debian:bookworm-slim AS chktex
-ARG CHKTEX_VERSION=1.7.8
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends g++ make perl wget
+ARG CHKTEX_VERSION=1.7.8
 RUN wget -qO- http://download.savannah.gnu.org/releases/chktex/chktex-${CHKTEX_VERSION}.tar.gz | \
     tar -xz --strip-components=1
 RUN ./configure && \
@@ -11,62 +11,21 @@ RUN ./configure && \
     rm -r *
 
 
-FROM debian:bookworm-slim as biber
-ARG BIBER_VERSION=2.19
+FROM debian:bookworm-slim AS biblatex
 WORKDIR /tmp/workdir
-RUN echo "deb http://ftp.us.debian.org/debian buster main contrib non-free" >> /etc/apt/sources.list && \
-    apt-get update -yqq && \
-    apt-get install -yqq --no-install-recommends \
-    ca-certificates \
-    cpanminus \
-    gcc \
-    git \
-    icu-devtools \
-    libcrypt-dev \
-    libicu-dev \
-    libicu63 \
-    liblzma-dev \
-    libperl-dev \
-    libssl-dev \
-    libxslt-dev \
-    locales \
-    make \
-    perl \
-    openssl \
-    wget \
-    zlib1g-dev
-RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment && \
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
-    echo "LANG=en_US.UTF-8" > /etc/locale.conf && \
-    locale-gen en_US.UTF-8
-RUN git clone https://github.com/redhotpenguin/perl-Archive-Zip.git /tmp/perl-Archive-Zip && \
-    cd /tmp/perl-Archive-Zip && \
-    perl Makefile.PL && \
-    make && \
-    make test && \
-    make install && \
-    cpanm pp && \
-    cpanm Net::SSLeay && \
-    cpanm IO::Socket::SSL && \
-    cpanm LWP::Protocol::https && \
-    cpanm PAR && \
-    cpanm PAR::Dist && \
-    cpanm PAR::Packer
-RUN git clone -b v${BIBER_VERSION} https://github.com/plk/biber.git . && \
-    perl ./Build.PL && \
-    ./Build installdeps && \
-    ./Build install
-RUN cd ./dist/linux_$(uname -a | awk '{print $(NF-1)}') && \
-    chmod +x build.sh && \
-    ./build.sh && \
-    mv biber-linux* /tmp/biber
+RUN apt-get update -yqq && \
+    apt-get install -yqq --no-install-recommends ca-certificates git perl
+ARG BIBLATEX_VERSION=3.18b
+RUN git clone -b v${BIBLATEX_VERSION} https://github.com/plk/biblatex.git . && \
+    mkdir -p /tmp/texmf && \
+    obuild/build.sh install ${BIBLATEX_VERSION} /tmp/texmf
 
 
 FROM debian:bookworm-slim AS ltexls
-ARG LTEX_VERSION=15.2.0
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends ca-certificates curl tar
+ARG LTEX_VERSION=15.2.0
 RUN curl -o "/tmp/ltex-ls-${LTEX_VERSION}.tar.gz" -L "https://github.com/valentjn/ltex-ls/releases/download/${LTEX_VERSION}/ltex-ls-${LTEX_VERSION}.tar.gz" && \
     mkdir -p /usr/share && \
     tar -xf /tmp/ltex-ls-${LTEX_VERSION}.tar.gz -C /usr/share && \
@@ -77,6 +36,7 @@ RUN curl -o "/tmp/ltex-ls-${LTEX_VERSION}.tar.gz" -L "https://github.com/valentj
 FROM ghcr.io/willfantom/devcontainer:latest-debian
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends \
+    biber \
     cpanminus \
     default-jre \
     gcc \
@@ -107,8 +67,8 @@ RUN tlmgr install latexindent latexmk && texhash
 COPY --from=ltexls /usr/share/ltex-ls /usr/share/ltex-ls
 # CHKTEX
 COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
-# BIBER
-COPY --from=biber /tmp/biber /usr/local/bin/biber
+# BIBLATEX
+COPY --from=biblatex /tmp/texmf/ /usr/local/texlive/texmf-dist/
 # CLEANUP
 WORKDIR /workspace
 RUN rm -rf /tmp/texlive && \
