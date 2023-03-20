@@ -33,11 +33,13 @@ RUN curl -o "/tmp/ltex-ls-${LTEX_VERSION}.tar.gz" -L "https://github.com/valentj
     mv /usr/share/ltex-ls-${LTEX_VERSION} /usr/share/ltex-ls
 
 
-FROM ghcr.io/willfantom/devcontainer:latest-debian
+FROM debian:bullseye-slim
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends \
     biber \
+    ca-certificates \
     cpanminus \
+    curl \
     default-jre \
     gcc \
     git \
