@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim AS chktex
+FROM debian:bullseye-slim AS chktex
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends g++ make perl wget
@@ -11,7 +11,7 @@ RUN ./configure && \
     rm -r *
 
 
-FROM debian:bookworm-slim AS biblatex
+FROM debian:bullseye-slim AS biblatex
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends ca-certificates git perl
@@ -21,7 +21,7 @@ RUN git clone -b v${BIBLATEX_VERSION} https://github.com/plk/biblatex.git . && \
     obuild/build.sh install ${BIBLATEX_VERSION} /tmp/texmf
 
 
-FROM debian:bookworm-slim AS ltexls
+FROM debian:bullseye-slim AS ltexls
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends ca-certificates curl tar
