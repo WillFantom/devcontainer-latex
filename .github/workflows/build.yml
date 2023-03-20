@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        scheme: [basic, small]
+        scheme: [minimal, basic, small]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
