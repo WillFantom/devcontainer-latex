@@ -35,6 +35,18 @@ A complete development container for Latex for use with VSCode/GitHub Codespaces
 
 For this, you will have to build the container with the build arg `TEX_SCHEME` set to `full`. This may end up being around 6GB once built... Make sure to set the `image` field in the devcontainer JSON file to the tag of your full scheme image.
 
+## Image customization
+
+You can use this image along with Devcontainer features, for example my [dotfiles](https://github.com/willfantom/.files) can be included by adding the following snippet in the `devcontainer.json` files:
+```json
+...
+"features": {
+  ...
+  "ghcr.io/willfantom/features/dotfiles:1": {}
+},
+...
+```
+
 ---
 
 This has been extended from [qdm12/latexdevcontainer](https://github.com/qdm12/latexdevcontainer) with the following core changes:
