@@ -36,7 +36,7 @@ FROM debian:bullseye-slim AS ltexls
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends ca-certificates curl tar
-ARG LTEX_VERSION=15.2.0
+ARG LTEX_VERSION=16.0.0
 RUN curl -o "/tmp/ltex-ls-${LTEX_VERSION}.tar.gz" -L "https://github.com/valentjn/ltex-ls/releases/download/${LTEX_VERSION}/ltex-ls-${LTEX_VERSION}.tar.gz" && \
     mkdir -p /usr/share && \
     tar -xf /tmp/ltex-ls-${LTEX_VERSION}.tar.gz -C /usr/share && \
