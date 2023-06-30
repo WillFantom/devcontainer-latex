@@ -14,7 +14,7 @@ RUN ./configure && \
 FROM debian:bullseye-slim as biber
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
-    apt-get install -yqq --no-install-recommends git libmodule-build-perl perl
+    apt-get install -yqq --no-install-recommends ca-certificates git libmodule-build-perl perl
 ARG BIBER_VERSION=2.19
 RUN git clone -b v${BIBER_VERSION} https://github.com/plk/biber.git . && \
     perl Build.PL && \
