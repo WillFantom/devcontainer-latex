@@ -27,25 +27,34 @@ A complete development container for Latex for use with VSCode/GitHub Codespaces
 
  1. In the root of your project, create a directory named `.devcontainer`
  2. Copy the `devcontainer.json` file from this repository to the newly created directory
- 3. **optional:** Change to image being used for the devcontainer by updating the `image` field in the JSON file. For example, use the full texlive install scheme: `ghcr.io/willfantom/devcontainer-latex:latest-full`
+ 3. **optional:** Change to image being used for the devcontainer by updating the `image` field in the JSON file. For example, use the basic texlive install scheme: `ghcr.io/willfantom/devcontainer-latex:latest-basic`
  4. **optional:** Add other packages to be installed by `tlmgr` when the container starts to the `postCreateCommand` field in the JSON file
- 5. Open the project in the devontainer via the [devcontainer CLI](https://github.com/devcontainers/cli), the commands in VSCode, or in a GitHub Codespace
+ 5. Open the project in the devcontainer via the [devcontainer CLI](https://github.com/devcontainers/cli), the commands in VSCode, or in a GitHub Codespace
 
-### Full TexLive Install
+
+## Customization
+
+- Need specifc packages for your project? Add the appropriate `tlmgr` command
+  to the `postCreateCommand` in your `devcontainer.json`. An example of this has
+  been shown in this repo.
+
+- You can use this image along with Devcontainer features. For example my [dotfiles](https://github.com/willfantom/.files) can be included by adding the following snippet in the `devcontainer.json` files:
+  ```json
+  ...
+  "features": {
+    ...
+    "ghcr.io/willfantom/features/dotfiles:1": {}
+  },
+  ...
+  ```
+
+## Full TexLive Install
+
+In most cases, I suggest starting with the `latest-small` tag and adding the
+packages you need as described [here](#customization). That said, if you really
+want a full image, you can easily build this yourself...
 
 For this, you will have to build the container with the build arg `TEX_SCHEME` set to `full`. This may end up being around 6GB once built... Make sure to set the `image` field in the devcontainer JSON file to the tag of your full scheme image.
-
-## Image customization
-
-You can use this image along with Devcontainer features, for example my [dotfiles](https://github.com/willfantom/.files) can be included by adding the following snippet in the `devcontainer.json` files:
-```json
-...
-"features": {
-  ...
-  "ghcr.io/willfantom/features/dotfiles:1": {}
-},
-...
-```
 
 ---
 
@@ -53,10 +62,11 @@ This has been extended from [qdm12/latexdevcontainer](https://github.com/qdm12/l
 
  - Inclusion of [`ltex-ls`](https://github.com/valentjn/ltex-ls) to use with the LanguageTool and [LTeX](https://marketplace.visualstudio.com/items?itemName=valentjn.vscode-ltex) extensions to provide grammar and spell checking in tex documents.
  - Inclusion of [`inskscape`](https://inkscape.org) to allow the inclusion of SVG graphics in tex documents.
- - No explicit reference to texlive **2022** in the Dockerfile.
+ - No explicit reference to the texlive version in the Dockerfile.
  - Building [`biblatex`](https://github.com/plk/biblatex) from source to get a specific version regardless of version provided by the package manager (`tlmgr`). This has been done since `biblatex` and `biber` are heavily tied to one another and can easily become incompatible.
  - No use of `docker-compose` to simplify the devcontainer setup process.
- - My [dotfiles](https://github.com/willfantom/.files) are used as the base of the image. This offers no real difference in most use cases, but it is a change I guess.
+ - Vanilla debian used as the base rather than a specific set of dotfiles (since
+   dotfiles can be added via devcontainer features...).
 
 
 
