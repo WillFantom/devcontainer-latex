@@ -15,7 +15,7 @@ A complete development container for Latex for use with VSCode/GitHub Codespaces
  - All the features provided via [`LaTeX-Workshop`](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
  - Install more packages with [`tlmgr`](https://www.tug.org/texlive/tlmgr.html)
  - Sits atop my [dotfiles](https://github.com/willfantom/.files)
- - Use on `amd64` and `aarch64`
+ - Use on `amd64` and `arm64`
 
 ## Local Usage Requirements
 
