@@ -1,4 +1,4 @@
-# Latex Dev Container
+# Latex Dev Container    ![GitHub release (latest SemVer)](https://img.shields.io/github/v/tag/willfantom/devcontainer-latex?display_name=tag&label=%20&sort=semver)  ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/willfantom/devcontainer-latex/build.yml?label=%20&logo=github)
 
 A complete development container for Latex for use with VSCode/GitHub Codespaces
 
