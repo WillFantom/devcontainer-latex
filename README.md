@@ -6,15 +6,15 @@ A complete development container for Latex for use with VSCode/GitHub Codespaces
 
 ## Features
 
- - [`texlive`](https://tug.org/texlive/) install (images for basic and small)
+ - [`texlive`](https://tug.org/texlive/) install (images for minimal, basic, and small)
  - Compile to PDF with [`latexmk`](https://mg.readthedocs.io/latexmk.html)
  - Format with [`latexindent`](https://latexindentpl.readthedocs.io/en/latest/)
  - Lint with [`chktex`](https://www.nongnu.org/chktex/)
  - Spelling and grammar checking with [`ltex-ls`](https://github.com/valentjn/ltex-ls)
  - Include SVG graphics with [`inskscape`](https://inkscape.org)
+ - Tested [`biber`](https://github.com/plk/biber) and [`biblatex`](https://github.com/plk/biblatex) compatibility
  - All the features provided via [`LaTeX-Workshop`](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
  - Install more packages with [`tlmgr`](https://www.tug.org/texlive/tlmgr.html)
- - Sits atop my [dotfiles](https://github.com/willfantom/.files)
  - Use on `amd64` and `arm64`
 
 ## Local Usage Requirements
