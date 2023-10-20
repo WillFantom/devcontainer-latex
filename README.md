@@ -12,7 +12,6 @@ A complete development container for Latex for use with VSCode/GitHub Codespaces
  - Lint with [`chktex`](https://www.nongnu.org/chktex/)
  - Spelling and grammar checking with [`ltex-ls`](https://github.com/valentjn/ltex-ls)
  - Include SVG graphics with [`inskscape`](https://inkscape.org)
- - Tested [`biber`](https://github.com/plk/biber) and [`biblatex`](https://github.com/plk/biblatex) compatibility
  - All the features provided via [`LaTeX-Workshop`](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
  - Install more packages with [`tlmgr`](https://www.tug.org/texlive/tlmgr.html)
  - Use on `amd64` and `arm64`
@@ -63,7 +62,6 @@ This has been extended from [qdm12/latexdevcontainer](https://github.com/qdm12/l
  - Inclusion of [`ltex-ls`](https://github.com/valentjn/ltex-ls) to use with the LanguageTool and [LTeX](https://marketplace.visualstudio.com/items?itemName=valentjn.vscode-ltex) extensions to provide grammar and spell checking in tex documents.
  - Inclusion of [`inskscape`](https://inkscape.org) to allow the inclusion of SVG graphics in tex documents.
  - No explicit reference to the texlive version in the Dockerfile.
- - Building [`biblatex`](https://github.com/plk/biblatex) from source to get a specific version regardless of version provided by the package manager (`tlmgr`). This has been done since `biblatex` and `biber` are heavily tied to one another and can easily become incompatible.
  - No use of `docker-compose` to simplify the devcontainer setup process.
  - Vanilla debian used as the base rather than a specific set of dotfiles (since
    dotfiles can be added via devcontainer features...).

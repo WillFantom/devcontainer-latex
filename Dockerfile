@@ -11,27 +11,6 @@ RUN ./configure && \
     rm -r *
 
 
-FROM debian:bullseye-slim as biber
-WORKDIR /tmp/workdir
-RUN apt-get update -yqq && \
-    apt-get install -yqq --no-install-recommends ca-certificates git libmodule-build-perl perl
-ARG BIBER_VERSION=2.19
-RUN git clone -b v${BIBER_VERSION} https://github.com/plk/biber.git . && \
-    perl Build.PL && \
-    ./Build installdeps && \
-    ./Build install
-
-
-FROM debian:bullseye-slim AS biblatex
-WORKDIR /tmp/workdir
-RUN apt-get update -yqq && \
-    apt-get install -yqq --no-install-recommends ca-certificates git perl
-ARG BIBLATEX_VERSION=3.19
-RUN git clone -b v${BIBLATEX_VERSION} https://github.com/plk/biblatex.git . && \
-    mkdir -p /tmp/texmf && \
-    obuild/build.sh install ${BIBLATEX_VERSION} /tmp/texmf
-
-
 FROM debian:bullseye-slim AS ltexls
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
@@ -79,14 +58,10 @@ RUN tlmgr install latexindent latexmk && texhash
 COPY --from=ltexls /usr/share/ltex-ls /usr/share/ltex-ls
 # CHKTEX
 COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
-# BIBER
-COPY --from=biber /usr/local/bin/biber /usr/local/bin/biber 
-# BIBLATEX
-COPY --from=biblatex /tmp/texmf/ /usr/local/texlive/texmf-dist/
 # CLEANUP
-WORKDIR /workspace
 RUN rm -rf /tmp/texlive && \
     apt-get remove -y cpanminus make gcc libc6-dev && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/
+WORKDIR /workspace
