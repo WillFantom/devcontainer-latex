@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim AS chktex
+FROM debian:bookworm-slim AS chktex
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends g++ make perl wget
@@ -11,7 +11,7 @@ RUN ./configure && \
     rm -r *
 
 
-FROM debian:bullseye-slim AS ltexls
+FROM debian:bookworm-slim AS ltexls
 WORKDIR /tmp/workdir
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends ca-certificates curl tar
@@ -23,7 +23,7 @@ RUN curl -o "/tmp/ltex-ls-${LTEX_VERSION}.tar.gz" -L "https://github.com/valentj
     mv /usr/share/ltex-ls-${LTEX_VERSION} /usr/share/ltex-ls
 
 
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 RUN apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends \
     ca-certificates \
